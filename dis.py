@@ -6,6 +6,7 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 import nltk
+nltk.download('punkt')
 
 #from imblearn.over_sampling import SMOTE
 tab_2, tab_1,tab_3 = st.tabs(['Diagnose','Information About Diagnosis','Health Information'])
