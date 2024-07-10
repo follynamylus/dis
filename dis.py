@@ -77,7 +77,7 @@ if option == 'Diagnose' :
         if len(sy_list) < 8 :
              tab_1.chat_message("assistant").write("""You are normal and not infected with any disease at all
                              """)
-        elif "cyclic fever" | "anemia" | "jaundice" in symptoms :
+        elif "cyclic fever" or "anemia" or "jaundice" in symptoms :
              tab_1.chat_message("assistant").write("""You are infected with malaria you need to see the doctor for 
                              medicine prescription
                              """)
