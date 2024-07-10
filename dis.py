@@ -11,7 +11,7 @@ nltk.download('stopwords')
 nltk.download('wordnet')
 
 #from imblearn.over_sampling import SMOTE
-tab_1, tab_2,tab_3 = st.tabs(['Diagnose','Information About Diagnosis','Health Information'])
+tab_1, tab_2,tab_3 = st.tabs(['Diagnose','Health Information'])
 
 with open('mrforest.pkl', 'rb') as file:
         forest = pickle.load(file)
