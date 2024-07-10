@@ -75,8 +75,12 @@ if option == 'Diagnose' :
         pred = forest.predict(df_conv)
         pred_proba = forest.predict_proba(df_conv)
         if len(sy_list) < 8 :
-             tab_1.chat_message("assistant").write("""You are normal and not infected with any disease at all
+             tab_1.chat_message("assistant").write("""You are normal and not infected with any of malaria or typhoid.
                              """)
+             tab_2.chat_message("assistant").write("""
+               You are free from both malaria and typhoid but should visit the doctor to discuss more about how you feel. 
+               So that you can get more detailed health information.               
+               """)
         elif "cyclic fever" or "anemia" or "jaundice" in symptoms :
              tab_1.chat_message("assistant").write("""You are infected with malaria you need to see the doctor for 
                              medicine prescription
