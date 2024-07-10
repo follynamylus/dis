@@ -25,6 +25,7 @@ if option == 'Diagnose' :
 
     df = pd.read_csv("diseases.csv")
     symptoms = tab_1.chat_input("How do you feel like")
+    sy_list = symptoms.split()
     if symptoms :
         tab_1.chat_message("user").write(symptoms)
         
@@ -71,38 +72,42 @@ if option == 'Diagnose' :
         df_conv = pd.DataFrame([DF])  
 
         pred = forest.predict(df_conv)
-        pred_proba = forest.predict_proba(df_conv) 
-        if i in pred == "Malaria":
-             tab_1.chat_message("assistant").write("""You are infected with malaria you need to see the doctor for 
-                             medicine prescription
+        pred_proba = forest.predict_proba(df_conv)
+        if len(sy_list) < 8 :
+             tab_1.chat_message("assistant").write("""You are normal and not infected with any disease at all
                              """)
-             tab_2.chat_message("assistant").write("""
-          The treatment for malaria typically involves taking antimalarial medications, as prescribed by the doctor,
-           depending on the specific type of malaria and its resistance patterns.
-           It is important to start treatment as soon as possible after diagnosis to prevent complications and ensure a quick recovery.
-           In severe cases, hospitalization may be necessary for intravenous medications and supportive care.
-           Additionally, maintaining hydration, getting adequate rest,
-          and following up with healthcare providers for monitoring and further evaluation are essential components of the treatment plan.
-                                                   
-          """) 
-        #elif i in pred == "Typhoid":
         else :
-             tab_1.chat_message("assistant").write("""You are infected with typhoid you need to see the doctor for 
-                             medicine prescription
-                             """)
-             tab_2.chat_message("assistant").write("""
-          The primary cure for typhoid fever involves antibiotics,That will be prescribed by the doctor,
-          .Additionally,supportive treatments such as hydration, rest, and proper nutrition are important to aid recovery.
-          In addition to taking antibiotics, it is crucial to stay well-hydrated by drinking plenty of fluids to prevent dehydration caused by fever and diarrhea.
-           Getting ample rest is essential to help your body fight off the infection and recover more quickly.
-           Maintaining proper nutrition by eating light, easily digestible foods such as soups, fruits, and boiled vegetables supports the immune system.
+          if i in pred == "Malaria":
+               tab_1.chat_message("assistant").write("""You are infected with malaria you need to see the doctor for 
+                              medicine prescription
+                              """)
+               tab_2.chat_message("assistant").write("""
+               The treatment for malaria typically involves taking antimalarial medications, as prescribed by the doctor,
+               depending on the specific type of malaria and its resistance patterns.
+               It is important to start treatment as soon as possible after diagnosis to prevent complications and ensure a quick recovery.
+               In severe cases, hospitalization may be necessary for intravenous medications and supportive care.
+               Additionally, maintaining hydration, getting adequate rest,
+               and following up with healthcare providers for monitoring and further evaluation are essential components of the treatment plan.
+                                                       
+               """) 
+          #elif i in pred == "Typhoid":
+          else :
+               tab_1.chat_message("assistant").write("""You are infected with typhoid you need to see the doctor for 
+                              medicine prescription
+                              """)
+               tab_2.chat_message("assistant").write("""
+               The primary cure for typhoid fever involves antibiotics,That will be prescribed by the doctor,
+               .Additionally,supportive treatments such as hydration, rest, and proper nutrition are important to aid recovery.
+               In addition to taking antibiotics, it is crucial to stay well-hydrated by drinking plenty of fluids to prevent dehydration caused by fever and diarrhea.
+               Getting ample rest is essential to help your body fight off the infection and recover more quickly.
+               Maintaining proper nutrition by eating light, easily digestible foods such as soups, fruits, and boiled vegetables supports the immune system.
 
-          Practicing good personal hygiene, including regular handwashing with soap and water, helps prevent the spread of the infection to others.
-           It is important to consume only safe, well-cooked food and drink purified or bottled water to avoid re-infection.
-           Attending follow-up appointments with your healthcare provider ensures the infection is completely cleared and monitors for any potential complications.
-          Finally, consider getting vaccinated against typhoid fever if you live in or plan to travel to areas where the disease is common.
-                                                   
-          """)
+               Practicing good personal hygiene, including regular handwashing with soap and water, helps prevent the spread of the infection to others.
+               It is important to consume only safe, well-cooked food and drink purified or bottled water to avoid re-infection.
+               Attending follow-up appointments with your healthcare provider ensures the infection is completely cleared and monitors for any potential complications.
+               Finally, consider getting vaccinated against typhoid fever if you live in or plan to travel to areas where the disease is common.
+                                                       
+               """)
         #else :
              #tab_1.chat_message("assistant").write("""The diagnosis isnt you need to see the doctor for 
                              
