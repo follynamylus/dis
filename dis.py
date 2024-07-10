@@ -25,10 +25,11 @@ if option == 'Diagnose' :
 
     df = pd.read_csv("diseases.csv")
     symptoms = tab_1.chat_input("How do you feel like")
-    sy_list = symptoms.split()
+    
     if symptoms :
         tab_1.chat_message("user").write(symptoms)
-        
+        sy = symptoms.lower()
+        sy_list = sy.split()
         def convert_lower(text) :
              text = text.lower()
              return text
@@ -76,6 +77,19 @@ if option == 'Diagnose' :
         if len(sy_list) < 8 :
              tab_1.chat_message("assistant").write("""You are normal and not infected with any disease at all
                              """)
+        elif "cyclic fever" | "anemia" | "jaundice" in symptoms :
+             tab_1.chat_message("assistant").write("""You are infected with malaria you need to see the doctor for 
+                             medicine prescription
+                             """)
+             tab_2.chat_message("assistant").write("""
+               The treatment for malaria typically involves taking antimalarial medications, as prescribed by the doctor,
+               depending on the specific type of malaria and its resistance patterns.
+               It is important to start treatment as soon as possible after diagnosis to prevent complications and ensure a quick recovery.
+               In severe cases, hospitalization may be necessary for intravenous medications and supportive care.
+               Additionally, maintaining hydration, getting adequate rest,
+               and following up with healthcare providers for monitoring and further evaluation are essential components of the treatment plan.
+                                                       
+               """)
         else :
           if i in pred == "Malaria":
                tab_1.chat_message("assistant").write("""You are infected with malaria you need to see the doctor for 
