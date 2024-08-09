@@ -23,7 +23,6 @@ option = st.sidebar.selectbox("Choose the action to perform in the application",
     
 if option == 'Diagnose' :
 
-    df = pd.read_csv("diseases.csv")
     symptoms = tab_1.chat_input("How do you feel like")
     
     if symptoms :
@@ -33,7 +32,6 @@ if option == 'Diagnose' :
         def convert_lower(text) :
              text = text.lower()
              return text
-        df['text'] = df['text'].apply(convert_lower)
         def remove_stopwords(text) :
              new_list = []
              words = word_tokenize(text)
@@ -43,27 +41,20 @@ if option == 'Diagnose' :
                   if word not in sw:
                        new_list.append(word)
              return " ".join(new_list)
-        df['text'] = df['text'].apply(remove_stopwords)
         def lemma(text):
              lemmatize_text = []
              words = word_tokenize(text)
              for word in words :
                   lemmatize_text.append(WordNetLemmatizer().lemmatize(word))
              return " ".join(lemmatize_text)
-        df['text'] = df['text'].apply(lemma)
-        X = df['text']
-        y = df['label']
-        X_count_vect = count_vect.fit_transform(X)
-        #smote = SMOTE()
-        #X_resampled, y_resampled = smote.fit_resample(X_count_vect,y)
         symptoms = convert_lower(symptoms)
         symptoms = remove_stopwords(symptoms)
         symptoms = lemma(symptoms)
         data_vec = count_vect.fit_transform([symptoms])
-        df_count = pd.DataFrame(X_count_vect)
+        df_vec = pd.DataFrame(data_vec)
         DF = []
         for i in range(140) :
-            if i in df_count :
+            if i in df_vec :
                 if i != 0 :
                     DF.append(i)
                 else :
@@ -81,23 +72,23 @@ if option == 'Diagnose' :
                You are free from both malaria and typhoid but should visit the doctor to discuss more about how you feel. 
                So that you can get more detailed health information.               
                """)
-        elif "abdominal pain" or "constipation" or "rose colored rash" in symptoms :
+        elif "stomach pain" or "constipation" or "rose spots" in symptoms :
              tab_1.chat_message("assistant").write("""You are infected with typhoid you need to see the doctor for 
                               medicine prescription
                               """)
              tab_2.chat_message("assistant").write("""
-          The primary cure for typhoid fever involves antibiotics,That will be prescribed by the doctor,
-          .Additionally,supportive treatments such as hydration, rest, and proper nutrition are important to aid recovery.
-          In addition to taking antibiotics, it is crucial to stay well-hydrated by drinking plenty of fluids to prevent dehydration caused by fever and diarrhea.
-          Getting ample rest is essential to help your body fight off the infection and recover more quickly.
-          Maintaining proper nutrition by eating light, easily digestible foods such as soups, fruits, and boiled vegetables supports the immune system.
+               The primary cure for typhoid fever involves antibiotics,That will be prescribed by the doctor,
+               .Additionally,supportive treatments such as hydration, rest, and proper nutrition are important to aid recovery.
+               In addition to taking antibiotics, it is crucial to stay well-hydrated by drinking plenty of fluids to prevent dehydration caused by fever and diarrhea.
+               Getting ample rest is essential to help your body fight off the infection and recover more quickly.
+               Maintaining proper nutrition by eating light, easily digestible foods such as soups, fruits, and boiled vegetables supports the immune system.
 
-          Practicing good personal hygiene, including regular handwashing with soap and water, helps prevent the spread of the infection to others.
-          It is important to consume only safe, well-cooked food and drink purified or bottled water to avoid re-infection.
-          Attending follow-up appointments with your healthcare provider ensures the infection is completely cleared and monitors for any potential complications.
-          Finally, consider getting vaccinated against typhoid fever if you live in or plan to travel to areas where the disease is common.
-                                                  
-          """)
+               Practicing good personal hygiene, including regular handwashing with soap and water, helps prevent the spread of the infection to others.
+               It is important to consume only safe, well-cooked food and drink purified or bottled water to avoid re-infection.
+               Attending follow-up appointments with your healthcare provider ensures the infection is completely cleared and monitors for any potential complications.
+               Finally, consider getting vaccinated against typhoid fever if you live in or plan to travel to areas where the disease is common.
+                                                       
+               """)
                      #else :
 
         else :
@@ -132,15 +123,6 @@ if option == 'Diagnose' :
                Finally, consider getting vaccinated against typhoid fever if you live in or plan to travel to areas where the disease is common.
                                                        
                """)
-        #else :
-             #tab_1.chat_message("assistant").write("""The diagnosis isnt you need to see the doctor for 
-                             
-              #               """)
-             #tab_2.chat_message("assistant").write("""
-          #The diagnosis is neither malaria nor typhoid, you are advised to contact the doctor for further test.                                       
-         # """)
-        #tab_1.chat_message("assistant").write(f"Echo: {pred}, {pred_proba}")
-
 else :
      info_option = st.sidebar.selectbox("Choose the health information needed",('Malaria','Typhoid'))
      if info_option == "Malaria" :
